@@ -1,0 +1,34 @@
+version: "2"
+
+services:
+  app:
+    build: ./app
+    image: "phpsampleapp/app"
+    ports:
+      - "9000:80"
+    volumes:
+      - "./app/src:/var/www/html"
+    networks:
+      - "dev-network"
+    depends_on:
+      - mysql
+
+  mysql:
+    build: ./mysql
+    image: "phpsampleapp/mysql"
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./mysql/conf:/etc/mysql/conf.d"
+      - "./mysql/logs:/var/log/mysql"
+      - "./mysql/init:/docker-entrypoint-initdb.d"
+    networks:
+      - "dev-network"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: 'phpsampleapp'
+      MYSQL_USER: "root"
+
+networks:
+  dev-network:
+    external: true

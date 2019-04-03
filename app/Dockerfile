@@ -2,11 +2,11 @@ FROM php:7.0-apache
 
 # copy config
 COPY ./php/php.ini /usr/local/etc/php/
-COPY ./apache/*.conf /etc/apache2/sites-enabled/php -r "unlink('composer-setup.php');"
+COPY ./apache/*.conf /etc/apache2/sites-enabled/
 
 # install packages
 RUN apt-get update -y && \
-    apt-get install git zip unzip
+    apt-get install -y git zip unzip
 
 # install composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \

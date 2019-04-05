@@ -2,7 +2,9 @@
 
 namespace App\Infrastructure\Factories\Interfaces;
 
-class IArticleFactory
+use App\Domain\Article\Article;
+
+interface IArticleFactory
 {
-    public create($id, $subject, $body, $created_datetime, $updated_datetime);
+    public function toEntity($record);
 }

@@ -22,10 +22,10 @@ Route::group(['middleware' => 'api'], function() {
     Route::get('article/list', 'ArticleController@list');
 
     // Get article detail.
-    Route::get('article/get/{id}', 'ArticleController@get');
+    Route::get('article/detail/{id}', 'ArticleController@detail');
 
     // Post article.
-    Route::post('article/add/{id}', 'ArticleController@add');
+    Route::post('article/add', 'ArticleController@add');
 
     // Update article.
     Route::put('article/update/{id}', 'ArticleController@update');

@@ -28,10 +28,45 @@ class Article
         ArticleUpdatedDatetime $updated_datetime
     )
     {
-        $this->id = $id;
-        $this->subject = $subject;
-        $this->body = $body;
+        $this->id               = $id;
+        $this->subject          = $subject;
+        $this->body             = $body;
         $this->created_datetime = $created_datetime;
-        $this->updated_datetime = $updated_datetime
+        $this->updated_datetime = $updated_datetime;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setSubject(ArticleSubject $subject)
+    {
+        $this->subject = $subject;
+    }
+
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+
+    public function setBody(ArticleBody $body)
+    {
+        $this->body = $body;
+    }
+
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    public function getCreatedDatetime()
+    {
+        return $this->created_datetime;
+    }
+
+    public function getUpdatedDatetime()
+    {
+        return $this->updated_datetime;
     }
 }

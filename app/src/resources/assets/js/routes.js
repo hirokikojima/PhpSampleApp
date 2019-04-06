@@ -5,12 +5,12 @@ import ArticleList from './components/ArticleList.vue'
 export default [
     {
         name: 'detail',
-        path: '/detail',
+        path: '/detail/:id',
         component: ArticleDetail
     },
     {
         name: 'editor',
-        path: '/editor',
+        path: '/editor/:id?',
         component: ArticleEditor
     },
     {

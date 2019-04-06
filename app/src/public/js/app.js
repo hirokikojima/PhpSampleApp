@@ -15980,11 +15980,11 @@ if (inBrowser && window.Vue) {
 
 /* harmony default export */ __webpack_exports__["a"] = ([{
     name: 'detail',
-    path: '/detail',
+    path: '/detail/:id',
     component: __WEBPACK_IMPORTED_MODULE_0__components_ArticleDetail_vue___default.a
 }, {
     name: 'editor',
-    path: '/editor',
+    path: '/editor/:id?',
     component: __WEBPACK_IMPORTED_MODULE_1__components_ArticleEditor_vue___default.a
 }, {
     name: 'list',
@@ -16001,6 +16001,10 @@ if (inBrowser && window.Vue) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(64)
+}
 var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(19)
@@ -16009,7 +16013,7 @@ var __vue_template__ = __webpack_require__(20)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -16053,8 +16057,138 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+    created: function created() {
+        this.fetchArticle(this.$route.params.id);
+    },
+    data: function data() {
+        return {
+            article: {
+                id: "",
+                subject: "",
+                body: ""
+            },
+            showModal: false
+        };
+    },
+
+    methods: {
+        fetchArticle: function fetchArticle(id) {
+            var _this = this;
+
+            axios.get('api/article/detail/' + id).then(function (res) {
+                return _this.article = res.data;
+            });
+        },
+        removeArticle: function removeArticle() {
+            var _this2 = this;
+
+            axios.delete('api/article/remove/' + this.article.id).then(function (res) {
+                return _this2.$router.push('/list');
+            });
+        }
+    }
+});
 
 /***/ }),
 /* 20 */
@@ -16064,7 +16198,73 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h2", [_vm._v("Article Detail")])
+  return _c(
+    "div",
+    [
+      _c("div", [
+        _c(
+          "button",
+          [
+            _c(
+              "router-link",
+              { attrs: { to: "/editor/" + _vm.$route.params.id } },
+              [_vm._v("Edit")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            on: {
+              click: function($event) {
+                _vm.showModal = true
+              }
+            }
+          },
+          [_c("p", [_vm._v("Remove")])]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", [_c("h2", [_vm._v(_vm._s(_vm.article.subject))])]),
+      _vm._v(" "),
+      _c("div", [_c("p", [_vm._v(_vm._s(_vm.article.body))])]),
+      _vm._v(" "),
+      _vm.showModal
+        ? _c("transition", [
+            _c("div", { staticClass: "modal-mask" }, [
+              _c("div", { staticClass: "modal-wrapper" }, [
+                _c("div", { staticClass: "modal-container" }, [
+                  _c("div", { staticClass: "modal-header" }, [
+                    _c("p", [_vm._v("Are you sure you want to delete?")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c("button", { on: { click: _vm.removeArticle } }, [
+                      _vm._v("Remove")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        on: {
+                          click: function($event) {
+                            _vm.showModal = false
+                          }
+                        }
+                      },
+                      [_vm._v("Cancel")]
+                    )
+                  ])
+                ])
+              ])
+            ])
+          ])
+        : _vm._e()
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -16133,8 +16333,64 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+    created: function created() {
+        this.fetchArticle(this.$route.params.id);
+    },
+    data: function data() {
+        return {
+            article: {
+                id: "",
+                subject: "",
+                body: ""
+            }
+        };
+    },
+
+    methods: {
+        fetchArticle: function fetchArticle(id) {
+            var _this = this;
+
+            if (id) {
+                axios.get('api/article/detail/' + id).then(function (res) {
+                    return _this.article = res.data;
+                });
+            }
+        },
+        postArticle: function postArticle() {
+            var _this2 = this;
+
+            if (!this.article.id) {
+                // 記事追加の場合
+                axios.post('api/article/add', {
+                    subject: this.article.subject,
+                    body: this.article.body
+                }).then(function (res) {
+                    return _this2.$router.push('/list');
+                });
+            } else {
+                // 記事更新の場合
+                axios.put('api/article/update/' + this.article.id, {
+                    subject: this.article.subject,
+                    body: this.article.body
+                }).then(function (res) {
+                    return _this2.$router.push('/list');
+                });
+            }
+        }
+    }
+});
 
 /***/ }),
 /* 23 */
@@ -16144,7 +16400,56 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h2", [_vm._v("Article Editor")])
+  return _c("div", [
+    _c("div", [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.article.subject,
+            expression: "article.subject"
+          }
+        ],
+        attrs: { type: "text" },
+        domProps: { value: _vm.article.subject },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.article, "subject", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", [
+      _c("textarea", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.article.body,
+            expression: "article.body"
+          }
+        ],
+        domProps: { value: _vm.article.body },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.article, "body", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", [
+      _c("button", { on: { click: _vm.postArticle } }, [_vm._v("Post")])
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -16213,8 +16518,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+    created: function created() {
+        this.fetchArticles();
+    },
+    data: function data() {
+        return {
+            articles: []
+        };
+    },
+
+    methods: {
+        fetchArticles: function fetchArticles() {
+            var _this = this;
+
+            axios.get('api/article/list').then(function (res) {
+                return _this.articles = res.data;
+            });
+        }
+    }
+});
 
 /***/ }),
 /* 26 */
@@ -16224,7 +16556,28 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h2", [_vm._v("Article List")])
+  return _c("div", [
+    _c(
+      "ul",
+      _vm._l(_vm.articles, function(article, index) {
+        return _c(
+          "li",
+          { key: index },
+          [
+            _c("router-link", { attrs: { to: "/detail/" + article.id } }, [
+              _vm._v(
+                "\n                " +
+                  _vm._s(article.subject) +
+                  "\n            "
+              )
+            ])
+          ],
+          1
+        )
+      }),
+      0
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -47357,7 +47710,400 @@ if (false) {
 /* 53 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: Error: Missing binding C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\node-sass\\vendor\\win32-x64-48\\binding.node\nNode Sass could not find a binding for your current environment: Windows 64-bit with Node.js 6.x\n\nFound bindings for the following environments:\n  - Windows 64-bit with Node.js 8.x\n\nThis usually happens because your environment has changed since running `npm install`.\nRun `npm rebuild node-sass` to download the binding for your current environment.\n    at module.exports (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\node-sass\\lib\\binding.js:15:13)\n    at Object.<anonymous> (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\node-sass\\lib\\index.js:14:35)\n    at Module._compile (module.js:570:32)\n    at Object.Module._extensions..js (module.js:579:10)\n    at Module.load (module.js:487:32)\n    at tryModuleLoad (module.js:446:12)\n    at Function.Module._load (module.js:438:3)\n    at Module.require (module.js:497:17)\n    at require (internal/module.js:20:19)\n    at Object.<anonymous> (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\sass-loader\\lib\\loader.js:3:14)\n    at Module._compile (module.js:570:32)\n    at Object.Module._extensions..js (module.js:579:10)\n    at Module.load (module.js:487:32)\n    at tryModuleLoad (module.js:446:12)\n    at Function.Module._load (module.js:438:3)\n    at Module.require (module.js:497:17)\n    at require (internal/module.js:20:19)\n    at loadLoader (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\loadLoader.js:18:17)\n    at iteratePitchingLoaders (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:165:10)\n    at C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:176:18\n    at loadLoader (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\loadLoader.js:47:3)\n    at iteratePitchingLoaders (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:165:10)\n    at C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:176:18\n    at loadLoader (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\loadLoader.js:47:3)\n    at iteratePitchingLoaders (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:165:10)\n    at C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:176:18\n    at loadLoader (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\loadLoader.js:47:3)\n    at runLoaders (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\webpack\\lib\\NormalModule.js:195:19)\n    at C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:367:11\n    at C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:172:11\n    at loadLoader (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\loadLoader.js:32:11)\n    at iteratePitchingLoaders (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:165:10)\n    at C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:176:18\n    at loadLoader (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\loadLoader.js:47:3)\n    at iteratePitchingLoaders (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:165:10)\n    at C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:176:18\n    at loadLoader (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\loadLoader.js:47:3)\n    at iteratePitchingLoaders (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:169:2)\n    at iteratePitchingLoaders (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:165:10)\n    at C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:176:18\n    at loadLoader (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\loadLoader.js:47:3)\n    at iteratePitchingLoaders (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:169:2)\n    at runLoaders (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\loader-runner\\lib\\LoaderRunner.js:365:2)\n    at NormalModule.doBuild (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\webpack\\lib\\NormalModule.js:182:3)\n    at NormalModule.build (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\webpack\\lib\\NormalModule.js:275:15)\n    at Compilation.buildModule (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\webpack\\lib\\Compilation.js:157:10)\n    at moduleFactory.create (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\webpack\\lib\\Compilation.js:460:10)\n    at factory (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\webpack\\lib\\NormalModuleFactory.js:243:5)\n    at applyPluginsAsyncWaterfall (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\webpack\\lib\\NormalModuleFactory.js:94:13)\n    at C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\tapable\\lib\\Tapable.js:268:11\n    at NormalModuleFactory.params.normalModuleFactory.plugin (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\webpack\\lib\\CompatibilityPlugin.js:52:5)\n    at NormalModuleFactory.applyPluginsAsyncWaterfall (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\tapable\\lib\\Tapable.js:272:13)\n    at resolver (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\webpack\\lib\\NormalModuleFactory.js:69:10)\n    at process.nextTick (C:\\Users\\lyzon\\work\\projects\\github.com\\h_kojima\\PhpSampleApp\\app\\src\\node_modules\\webpack\\lib\\NormalModuleFactory.js:196:7)\n    at _combinedTickCallback (internal/process/next_tick.js:73:7)\n    at process._tickCallback (internal/process/next_tick.js:104:9)");
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 54 */,
+/* 55 */,
+/* 56 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(65);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(66)("7fe251b4", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js?sourceMap!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e81ba680\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ArticleDetail.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js?sourceMap!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-e81ba680\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ArticleDetail.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(56)(true);
+// imports
+
+
+// module
+exports.push([module.i, "\n.modal-mask {\r\n  position: fixed;\r\n  z-index: 9998;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: rgba(0, 0, 0, .5);\r\n  display: table;\r\n  -webkit-transition: opacity .3s ease;\r\n  transition: opacity .3s ease;\n}\n.modal-wrapper {\r\n  display: table-cell;\r\n  vertical-align: middle;\n}\n.modal-container {\r\n  width: 300px;\r\n  margin: 0px auto;\r\n  padding: 20px 30px;\r\n  background-color: #fff;\r\n  border-radius: 2px;\r\n  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, .33);\r\n          box-shadow: 0 2px 8px rgba(0, 0, 0, .33);\r\n  -webkit-transition: all .3s ease;\r\n  transition: all .3s ease;\r\n  font-family: Helvetica, Arial, sans-serif;\n}\n.modal-header h3 {\r\n  margin-top: 0;\r\n  color: #42b983;\n}\n.modal-body {\r\n  margin: 20px 0;\n}\n.modal-default-button {\r\n  float: right;\n}\r\n\r\n/*\r\n * The following styles are auto-applied to elements with\r\n * transition=\"modal\" when their visibility is toggled\r\n * by Vue.js.\r\n *\r\n * You can easily play with the modal transition by editing\r\n * these styles.\r\n */\n.modal-enter {\r\n  opacity: 0;\n}\n.modal-leave-active {\r\n  opacity: 0;\n}\n.modal-enter .modal-container,\r\n.modal-leave-active .modal-container {\r\n  -webkit-transform: scale(1.1);\r\n  transform: scale(1.1);\n}\r\n", "", {"version":3,"sources":["C:/Users/h_kojima/work/src/github/hirokikojima/PhpSampleApp/app/src/resources/assets/js/components/resources/assets/js/components/ArticleDetail.vue"],"names":[],"mappings":";AAsCA;EACA,gBAAA;EACA,cAAA;EACA,OAAA;EACA,QAAA;EACA,YAAA;EACA,aAAA;EACA,oCAAA;EACA,eAAA;EACA,qCAAA;EAAA,6BAAA;CACA;AAEA;EACA,oBAAA;EACA,uBAAA;CACA;AAEA;EACA,aAAA;EACA,iBAAA;EACA,mBAAA;EACA,uBAAA;EACA,mBAAA;EACA,iDAAA;UAAA,yCAAA;EACA,iCAAA;EAAA,yBAAA;EACA,0CAAA;CACA;AAEA;EACA,cAAA;EACA,eAAA;CACA;AAEA;EACA,eAAA;CACA;AAEA;EACA,aAAA;CACA;;AAEA;;;;;;;GAOA;AAEA;EACA,WAAA;CACA;AAEA;EACA,WAAA;CACA;AAEA;;EAEA,8BAAA;EACA,sBAAA;CACA","file":"ArticleDetail.vue","sourcesContent":["<template>\r\n    <div>\r\n        <div>\r\n            <button>\r\n                <router-link :to=\"'/editor/' + $route.params.id\">Edit</router-link>\r\n            </button>\r\n            <button v-on:click=\"showModal=true\">\r\n                <p>Remove</p>\r\n            </button>\r\n        </div>\r\n        <div>\r\n            <h2>{{ article.subject }}</h2>\r\n        </div>\r\n        <div>\r\n            <p>{{ article.body }}</p>\r\n        </div>\r\n\r\n        <!-- modal -->\r\n        <transition v-if=\"showModal\">\r\n            <div class=\"modal-mask\">\r\n                <div class=\"modal-wrapper\">\r\n                    <div class=\"modal-container\">\r\n                        <div class=\"modal-header\">\r\n                            <p>Are you sure you want to delete?</p>\r\n                        </div>\r\n                        <div class=\"modal-footer\">\r\n                            <button v-on:click=\"removeArticle\">Remove</button>\r\n                            <button v-on:click=\"showModal=false\">Cancel</button>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </transition>\r\n        <!-- /modal -->\r\n    </div>\r\n</template>\r\n\r\n<style>\r\n.modal-mask {\r\n  position: fixed;\r\n  z-index: 9998;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: rgba(0, 0, 0, .5);\r\n  display: table;\r\n  transition: opacity .3s ease;\r\n}\r\n\r\n.modal-wrapper {\r\n  display: table-cell;\r\n  vertical-align: middle;\r\n}\r\n\r\n.modal-container {\r\n  width: 300px;\r\n  margin: 0px auto;\r\n  padding: 20px 30px;\r\n  background-color: #fff;\r\n  border-radius: 2px;\r\n  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);\r\n  transition: all .3s ease;\r\n  font-family: Helvetica, Arial, sans-serif;\r\n}\r\n\r\n.modal-header h3 {\r\n  margin-top: 0;\r\n  color: #42b983;\r\n}\r\n\r\n.modal-body {\r\n  margin: 20px 0;\r\n}\r\n\r\n.modal-default-button {\r\n  float: right;\r\n}\r\n\r\n/*\r\n * The following styles are auto-applied to elements with\r\n * transition=\"modal\" when their visibility is toggled\r\n * by Vue.js.\r\n *\r\n * You can easily play with the modal transition by editing\r\n * these styles.\r\n */\r\n\r\n.modal-enter {\r\n  opacity: 0;\r\n}\r\n\r\n.modal-leave-active {\r\n  opacity: 0;\r\n}\r\n\r\n.modal-enter .modal-container,\r\n.modal-leave-active .modal-container {\r\n  -webkit-transform: scale(1.1);\r\n  transform: scale(1.1);\r\n}\r\n</style>\r\n\r\n<script>\r\nexport default {\r\n    created() {\r\n        this.fetchArticle(this.$route.params.id)\r\n    },\r\n    data() {\r\n        return {\r\n            article: {\r\n                id: \"\",\r\n                subject: \"\",\r\n                body: \"\"\r\n            },\r\n            showModal: false\r\n        }\r\n    },\r\n    methods: {\r\n        fetchArticle(id) {\r\n            axios.get('api/article/detail/' + id)\r\n                .then(res => this.article = res.data)\r\n        },\r\n        removeArticle() {\r\n            axios.delete('api/article/remove/' + this.article.id)\r\n                .then(res => this.$router.push('/list'))\r\n        }\r\n    }\r\n}\r\n</script>"],"sourceRoot":""}]);
+
+// exports
+
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+var listToStyles = __webpack_require__(67)
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+var options = null
+var ssrIdKey = 'data-vue-ssr-id'
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+module.exports = function (parentId, list, _isProduction, _options) {
+  isProduction = _isProduction
+
+  options = _options || {}
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+  if (options.ssrId) {
+    styleElement.setAttribute(ssrIdKey, obj.id)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
 
 /***/ })
 /******/ ]);
+//# sourceMappingURL=app.js.map

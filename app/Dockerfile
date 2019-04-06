@@ -6,7 +6,8 @@ COPY ./apache/*.conf /etc/apache2/sites-enabled/
 
 # install packages
 RUN apt-get update -y && \
-    apt-get install -y git zip unzip
+    apt-get install -y git zip unzip && \
+    docker-php-ext-install pdo_mysql
 
 # install composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
@@ -14,3 +15,6 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     php composer-setup.php && \
     php -r "unlink('composer-setup.php');" && \
     mv composer.phar /usr/local/bin/composer
+
+# enable mod_rewrite
+RUN a2enmod rewrite

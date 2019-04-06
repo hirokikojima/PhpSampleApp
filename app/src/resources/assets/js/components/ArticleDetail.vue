@@ -1,12 +1,8 @@
 <template>
-    <div>
-        <div>
-            <button>
-                <router-link :to="'/editor/' + $route.params.id">Edit</router-link>
-            </button>
-            <button v-on:click="showModal=true">
-                <p>Remove</p>
-            </button>
+    <div class="pt-3"> 
+        <div class="text-right">
+            <b-button :to="'/editor/' + $route.params.id">Edit</b-button>
+            <b-button v-on:click="showModal=true" variant="danger">Remove</b-button>
         </div>
         <div>
             <h2>{{ article.subject }}</h2>
@@ -24,8 +20,8 @@
                             <p>Are you sure you want to delete?</p>
                         </div>
                         <div class="modal-footer">
-                            <button v-on:click="removeArticle">Remove</button>
-                            <button v-on:click="showModal=false">Cancel</button>
+                            <b-button v-on:click="removeArticle" variant="danger">Remove</b-button>
+                            <b-button v-on:click="showModal=false">Cancel</b-button>
                         </div>
                     </div>
                 </div>

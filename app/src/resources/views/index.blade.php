@@ -9,7 +9,7 @@
     </head>
     <body>
         <div id="app">
-            <div class="navbar">
+            <div class="navbar-wrap">
                 <navbar></navbar>
             </div>
             <div class="container">

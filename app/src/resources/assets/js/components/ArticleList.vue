@@ -1,12 +1,11 @@
 <template>
-    <div>
-        <ul>
-            <li v-for="(article, index) in articles" :key="index">
-                <router-link :to="'/detail/' + article.id">
-                    {{ article.subject }}
-                </router-link>
-            </li>
-        </ul>
+    <div class="pt-3">
+        <h2>Article List</h2>
+        <b-list-group>
+            <b-list-group-item v-for="(article, index) in articles" :key="index" :to="'/detail/' + article.id">
+                {{ article.subject }}
+            </b-list-group-item>
+        </b-list-group>
     </div>
 </template>
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\Interfaces\IArticleService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 /**
@@ -71,7 +72,17 @@ class ArticleController extends Controller
         $subject = $request->input('subject');
         $body = $request->input('body');
 
-        $this->articleService->add($subject, $body);
+        return DB::transaction(function() use ($subject, $body) {
+            $article = $this->articleService->add($subject, $body);
+
+            return [
+                'id'               => $article->getId()->getId(),
+                'subject'          => $article->getSubject()->getSubject(),
+                'body'             => $article->getBody()->getBody(),
+                'created_datetime' => $article->getCreatedDatetime()->getDatetime(),
+                'updated_datetime' => $article->getUpdatedDatetime()->getDatetime(),
+            ];
+        });
     }
 
     /**
@@ -82,7 +93,15 @@ class ArticleController extends Controller
         $subject = $request->input('subject');
         $body = $request->input('body');
 
-        $this->articleService->update($id, $subject, $body);
+        $count = 0;
+
+        return DB::transaction(function() use ($id, $subject, $body) {
+            $count = $this->articleService->update($id, $subject, $body);
+
+            return [
+                'count' => $count
+            ];
+        });        
     }
 
     /**
@@ -90,6 +109,14 @@ class ArticleController extends Controller
      */
     public function remove($id)
     {
-        $this->articleService->remove($id);
+        $count = 0;
+
+        DB::transaction(function() use ($id) {
+            $count = $this->articleService->remove($id);
+        });
+
+        return [
+            'count' => $count
+        ];
     }
 }

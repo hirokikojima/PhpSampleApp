@@ -1,11 +1,18 @@
 <template>
-    <div class="pt-3">
-        <h2>Article List</h2>
-        <b-list-group>
-            <b-list-group-item v-for="(article, index) in articles" :key="index" :to="'/detail/' + article.id">
-                {{ article.subject }}
-            </b-list-group-item>
-        </b-list-group>
+    <div class="component">
+        <div class="title clearfix">
+            <h2 class="float-left">Article List</h2>
+            <div class="float-right">
+                <b-button :to="'/editor/'" variant="success">New</b-button>
+            </div>
+        </div>
+        <div class="content">
+            <b-list-group>
+                <b-list-group-item v-for="(article, index) in articles" :key="index" :to="'/detail/' + article.id">
+                    {{ article.subject }}
+                </b-list-group-item>
+            </b-list-group>
+        </div>
     </div>
 </template>
 

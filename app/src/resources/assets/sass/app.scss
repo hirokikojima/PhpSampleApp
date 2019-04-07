@@ -6,4 +6,16 @@
 @import "variables";
 
 // Bootstrap
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+// @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+.container {
+    .component {
+        .title {
+            border-bottom: solid #ddd 1px;
+            padding-top: 25px;
+        }
+        .content {
+            padding-top: 25px;
+        }
+    }
+}

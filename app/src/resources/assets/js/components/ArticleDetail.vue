@@ -1,14 +1,19 @@
 <template>
-    <div class="pt-3"> 
-        <div class="text-right">
-            <b-button :to="'/editor/' + $route.params.id">Edit</b-button>
-            <b-button v-on:click="showModal=true" variant="danger">Remove</b-button>
+    <div class="component"> 
+        <div class="title clearfix">
+            <h2 class="float-left">Article Detail</h2>
+            <div class="float-right">
+                <b-button :to="'/editor/' + $route.params.id">Edit</b-button>
+                <b-button v-on:click="showModal=true" variant="danger">Remove</b-button>
+            </div>
         </div>
-        <div>
-            <h2>{{ article.subject }}</h2>
-        </div>
-        <div>
-            <p>{{ article.body }}</p>
+        <div class="content">
+            <div>
+                <h2>{{ article.subject }}</h2>
+            </div>
+            <div>
+                <p>{{ article.body }}</p>
+            </div>
         </div>
 
         <!-- modal -->
@@ -20,8 +25,8 @@
                             <p>Are you sure you want to delete?</p>
                         </div>
                         <div class="modal-footer">
-                            <b-button v-on:click="removeArticle" variant="danger">Remove</b-button>
                             <b-button v-on:click="showModal=false">Cancel</b-button>
+                            <b-button v-on:click="removeArticle" variant="danger">Remove</b-button>
                         </div>
                     </div>
                 </div>

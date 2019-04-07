@@ -1,28 +1,33 @@
 <template>
-    <div class="pt-3">
-        <b-row>
-            <b-col sm="2">
-                <label for="subject">Subject:</label>
-            </b-col>
-            <b-col sm="10">
-                <b-form-input id="subject" type="text" v-model="article.subject" />
-            </b-col>
-        </b-row>
-        <b-row class="mt-2">
-            <b-col sm="2">
-                <label for="body">Body:</label>
-            </b-col>
-            <b-col sm="10">
-                <b-form-textarea id="body" v-model="article.body" rows="3" max-rows="6"></b-form-textarea>
-            </b-col>
-        </b-row>
-        <b-row class="mt-2">
-            <b-col sm="2">
-            </b-col>
-            <b-col sm="10">
-                <b-button v-on:click="postArticle" variant="success">Post</b-button>
-            </b-col>
-        </b-row>
+    <div class="component">
+        <div class="title">
+            <h2>Article Editor</h2>
+        </div>
+        <div class="content">
+            <b-row>
+                <b-col sm="2">
+                    <label for="subject">Subject:</label>
+                </b-col>
+                <b-col sm="10">
+                    <b-form-input id="subject" type="text" v-model="article.subject" />
+                </b-col>
+            </b-row>
+            <b-row class="mt-2">
+                <b-col sm="2">
+                    <label for="body">Body:</label>
+                </b-col>
+                <b-col sm="10">
+                    <b-form-textarea id="body" v-model="article.body" rows="3" max-rows="6"></b-form-textarea>
+                </b-col>
+            </b-row>
+            <b-row class="mt-2">
+                <b-col sm="2">
+                </b-col>
+                <b-col sm="10">
+                    <b-button v-on:click="postArticle" variant="success">Post</b-button>
+                </b-col>
+            </b-row>
+        </div>
     </div>
 </template>
 
